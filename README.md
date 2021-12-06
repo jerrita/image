@@ -4,5 +4,7 @@
 
 ## 已有镜像
 
-gcr.io/distroless/base-debian10: registry.cn-hangzhou.aliyuncs.com/jerrita/image:base-debian
-ubuntu: image:cbuntu
+- base-debian10 => registry.cn-hangzhou.aliyuncs.com/jerrita/image:base-debian
+- dev ubuntu => cbuntu
+- nginx + php => base-php
+
