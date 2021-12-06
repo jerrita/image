@@ -1,7 +1,7 @@
 FROM php:7.4-fpm
 
 RUN apt-get update -y \
-    && apt-get install -y nginx libicu-dev \
+    && apt-get install -y nginx libicu-dev zlib1g-dev libpng-dev \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
