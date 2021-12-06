@@ -31,6 +31,6 @@ COPY --chown=www-data:www-data ./www /www
 
 WORKDIR /www
 
-EXPOSE 80 443
+EXPOSE 8000 9000
 
 ENTRYPOINT ["/etc/entrypoint.sh"]
