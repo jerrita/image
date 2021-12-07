@@ -9,6 +9,7 @@ RUN apt-get update -y \
 ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++11"
 
 RUN docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install mysqli \
     && docker-php-ext-install opcache \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl \
