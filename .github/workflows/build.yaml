@@ -13,7 +13,7 @@ jobs:
   buildx:
     strategy:
       matrix:
-        recipe: ["cbuntu", "base-php"]
+        recipe: ["base-php"]
 
     runs-on: ubuntu-latest
     steps:

@@ -1,16 +1,15 @@
-FROM php:fpm-alpine
-
-RUN apk --update add --no-cache nginx icu zlib libpng postgresql-dev
+FROM php:8.3-fpm
 
 # PHP_CPPFLAGS are used by the docker-php-ext-* scripts
 ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++17"
 
-RUN docker-php-ext-install pdo pdo_mysql \
-    mysqli pdo_pgsql pgsql opcache gd \
+RUN apt-get update -y \
+    && apt-get install -y --no-install-recommends nginx libpq-dev libicu-dev zlib1g-dev libpng-dev \
     && docker-php-ext-configure intl \
-    && docker-php-ext-install intl
-
-RUN { \
+    && docker-php-ext-install -j$(nproc) pdo_mysql mysqli pdo_pgsql pgsql opcache gd intl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /usr/share/doc/* /usr/share/man/* /tmp/* /var/tmp/* \
+    && { \
     echo 'opcache.memory_consumption=128'; \
     echo 'opcache.interned_strings_buffer=8'; \
     echo 'opcache.max_accelerated_files=4000'; \
