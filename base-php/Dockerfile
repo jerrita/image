@@ -1,22 +1,14 @@
 FROM php:fpm-alpine
 
-RUN apt-get update -y \
-    && apt-get install -y nginx libicu-dev zlib1g-dev libpng-dev \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk --update add --no-cache nginx icu zlib libpng postgresql-dev
 
 # PHP_CPPFLAGS are used by the docker-php-ext-* scripts
-ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++11"
+ENV PHP_CPPFLAGS="$PHP_CPPFLAGS -std=c++17"
 
-RUN docker-php-ext-install pdo_mysql \
-    && docker-php-ext-install mysqli \
-    && docker-php-ext-install pdo_pgsql \
-    && docker-php-ext-install pgsql \
-    && docker-php-ext-install opcache \
+RUN docker-php-ext-install pdo pdo_mysql \
+    mysqli pdo_pgsql pgsql opcache gd \
     && docker-php-ext-configure intl \
-    && docker-php-ext-install intl \
-    && docker-php-ext-install gd \
-    && apt-get remove libicu-dev icu-devtools -y
+    && docker-php-ext-install intl
 
 RUN { \
     echo 'opcache.memory_consumption=128'; \
